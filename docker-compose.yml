@@ -1,0 +1,23 @@
+version: "2"
+services:
+  auth-service:
+    command: ./node_modules/.bin/nodemon ./src/index.js
+    build: .
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - MONGO_URI=localhost
+      - JWT_SECRET=secret
+      - DB_URI=mongodb
+      - LOG_FILE_PATH=/var/log/app/app.log
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
